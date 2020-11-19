@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<h1>Welcome to RunPark - the official website! Showcasing some of the finest 5k United Kingdom athletes! </h1>
+<br>
+<br>
+<h3>RunPark Athletes:</h3>
+{% for user in users %}
+	<div>
+		<p>{{user.0}} '{{user.1}}' {{user.2}} </p> 	
+	</div>
+
+{% endfor %}
+{% endblock %}
+
+

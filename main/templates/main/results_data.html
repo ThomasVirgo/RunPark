@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+My Results
+{% endblock %}
+
+{% block content %}
+<div id="myChart">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        var my_times = "{{times}}"
+
+        var my_titles = {{ titles|safe }}
+        console.log(my_times, my_titles)
+        zingchart.render({
+        id: 'myChart',
+        data: {
+          type: 'line',
+          plot: {
+            aspect: "spline"
+          },
+            'scale-y': {
+    label: { 
+      text: "Time (minutes)",
+    },
+  },
+          'scale-x': {
+    label: { 
+      text: "5k Run Title",
+    },
+    labels: my_titles
+  },
+          series: [
+            { values: {{times}} }
+          ]
+        }
+      });
+    </script>
+</div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Nickname
+{% endblock %}
+
+
+{% block content %}
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+}
+</style>
+</head>
+
+<h2>Anonymously create a nickname for yourself .. or someone else</h2>
+<br>
+<form method="POST" action="/nickname/">
+	{% csrf_token %}
+	{{ form }}
+	<input type="submit" name="Create Nickname">
+</form>
+<br>
+<table>
+	<th>User</th>
+	<th>Nickname</th>
+	<th>Full Name</th>
+	{% for entry in nicknames %}
+		<tr>
+    		<td>{{entry.user}}</td>
+    		<td>{{entry.title}}</td>
+    		<td>{{entry.user.first_name}} '{{entry.title}}' {{entry.user.last_name}}</td>
+  		</tr>
+	{% endfor %}
+</table>
+
+
+{% endblock %}
+
+

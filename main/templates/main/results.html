@@ -1,0 +1,120 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+Results
+{% endblock %}
+
+
+{% block content %}
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+}
+</style>
+</head>
+
+<div>
+	View your results, and add new times by clicking <a href="/my_results/{{current_user.username}}"> here</a>.	
+</div>
+<br>
+<h3>Point Scoring Rules</h3>
+<p>Points are scored based on your times each week (each week is from Monday to Sunday):
+<br> 
+- Best 5k time of the week = 4 points
+<br>
+- Second = 3 points
+<br>
+- Third = 2 points
+<br>
+- if you submitted a time but did not come in the top 3, you get 1 point
+<br>
+- if you don't submit any times that week, you get zero!</p>
+
+
+<h3>Leaderboard</h3>
+<table>
+	<th>Username</th>
+	<th>Personal Best (minutes.seconds)</th>
+	<th>Best time this week (minutes.seconds)</th>
+	<th>Runs this week</th>
+	<th>Total runs</th>
+	<th>Total Points</th>
+
+	{% for entry in weekly_leaderboard %}
+		<tr>
+    		<td><a href="/see_results/{{entry.0.last_name}}"> {{entry.0}}</a></td> 
+    		<td>{{entry.1}}</td>
+    		<td>{{entry.2}}</td>
+    		<td>{{entry.3}}</td>
+    		<td>{{entry.4}}</td>
+    		<td>{{entry.5}}</td>
+  		</tr>
+	{% endfor %}
+</table>
+
+<head>
+  <!--Script Reference[1] -->
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+</head>
+<body>
+  <!-- Chart Placement[2] -->
+  <div id="myChart"></div>
+
+  <script>
+  	var actual_titles = {{titles|safe}}
+    let myConfig = {
+      type: 'bar3d',
+      title: {
+        text: 'Leaderboard',
+        fontSize: 24,
+      },
+      plot:{      
+      	valueBox: {
+      	color: '#fff',
+      	placement: 'top-in'
+      	},
+      	barWidth: "80%",
+  		},
+      scaleX: {
+        // Set scale label
+        
+
+        // Convert text on scale indices
+        labels: actual_titles,
+        itemsOverlap: true,
+        maxItems: 100,
+      },
+      scaleY: {
+        // Scale label with unicode character
+        
+      },
+
+      series: [
+        {
+          // Plot 1 values, linear data
+          values: {{my_values}},
+          text: 'Week 1',
+        },
+      ]
+    };
+
+    // Render Method[3]
+    zingchart.render({
+      id: 'myChart',
+      data: myConfig,
+    });
+  </script>
+</body>
+
+
+
+
+
+{% endblock %}

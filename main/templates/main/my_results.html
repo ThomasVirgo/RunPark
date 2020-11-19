@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+My Results
+{% endblock %}
+
+{% block content %}
+
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+}
+</style>
+</head>
+
+
+
+<h1>Your Results:</h1>
+
+<h3>Times should be inserted in the form xx.xx, as an example if you ran your 5k in 52 minutes and 24 seconds - then you're a fatty, but you should input this as 52.24, thank you and god bless. </h3>
+<br>
+<h4>See your progress by clicking <a href="/results_data/{{current_user.username}}"> here</a>.</h4>
+<br>
+<h3>Add a result below:</h3>
+<form method="POST" action="/my_results/{{current_user.username}}">
+	{% csrf_token %}
+	{{ form }}
+	<input type="submit" name="Create Time">
+</form>
+<br>
+<h2>Running History</h2>
+<table>
+	<th>Name</th>
+	<th>Title</th>
+	<th>Time (minutes.seconds)</th>
+	<th>Date </th>
+	<th>Edit Row</th>
+	<th>Delete Row</th>
+	{% for time in Running_Times %}
+		<tr>
+    		<td>{{time.user.first_name}}</td>
+    		<td>{{time.title}}</td>
+    		<td>{{time.run_time}}</td>
+    		<td>{{time.date}}</td>
+    		<td><a href=" {% url 'edit time' time.id %} ">edit</a></td>
+    		<td><a href="/my_results/delete/{{time.id}}">delete</a></td>
+  		</tr>
+	{% endfor %}
+</table>
+
+
+{% endblock %}
+

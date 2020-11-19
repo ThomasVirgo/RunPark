@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+{% block content %}
+
+
+<form method="POST", action="">
+	{% csrf_token %}
+	{{form}}
+	<input type="submit" name="edit time">
+	
+</form>
+
+<br>
+<a href="/home">Cancel </a>
+
+
+
+{% endblock %}

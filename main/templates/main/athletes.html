@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}
+Athletes
+{% endblock %}
+
+<body>
+    {% if user.is_authenticated %}
+        {% block content %}
+        <h1>Top RunPark Athletes</h1>
+        {% endblock %}
+    {% else %}
+        <p> <a href="/login"> Login Here </a> </p>
+    {% endif %}
+</body>

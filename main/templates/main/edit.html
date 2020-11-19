@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Change Time
+{% endblock %}
+
+{% block content %}
+
+
+<form method="POST", action="">
+	{% csrf_token %}
+	{{form}}
+	<input type="submit" name="edit time">
+	
+</form>
+
+
+
+{% endblock %}
